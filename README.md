@@ -169,7 +169,7 @@ while total_balance > 0:
     total_balance = remaining_balance
     month += 1
 
-# Week five code---------------------------------------------------------------------------------
+# Week six code---------------------------------------------------------------------------------
 
 # Encrypt project
 plaintext = input("Enter the plaintext: ")
