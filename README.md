@@ -208,3 +208,228 @@ except FileNotFoundError:
     print(f"Error: The file '{source_file}' was not found.")
 except Exception as e:
     print(f"An error occurred: {e}")
+
+# Week seven code---------------------------------------------------------------------------------
+
+# Stats project
+def mean(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+
+def median(numbers):
+    if not numbers:
+        return 0
+    sorted_numbers = sorted(numbers)
+    n = len(sorted_numbers)
+    if n % 2 == 1:
+        return sorted_numbers[n // 2]
+    else:
+        mid1 = sorted_numbers[n // 2 - 1]
+        mid2 = sorted_numbers[n // 2]
+        return (mid1 + mid2) / 2
+
+def mode(numbers):
+    if not numbers:
+        return 0
+    frequency = {}
+    for num in numbers:
+        frequency[num] = frequency.get(num, 0) + 1
+    max_freq = max(frequency.values())
+    modes = [num for num, freq in frequency.items() if freq == max_freq]
+    return modes[0] if len(modes) == 1 else modes
+
+def main():
+    user_input = input("Enter a list of numbers separated by spaces: ")
+    numbers = list(map(int, user_input.split()))
+    print(f"Mean: {mean(numbers)}")
+    print(f"Median: {median(numbers)}")
+    print(f"Mode: {mode(numbers)}")
+
+# Navigate project
+filename = input("Enter the filename: ")
+with open(filename, 'r') as file:
+    lines = file.readlines()
+
+while True:
+    print(f"Number of lines in the file: {len(lines)}")
+    line_number = int(input("Enter line number (0 to quit): "))
+    if line_number == 0:
+        break
+    if 1 <= line_number <= len(lines):
+        print(lines[line_number - 1].strip())
+    else:
+        print("Invalid line number. Please try again.")
+
+# Week eight code---------------------------------------------------------------------------------
+
+# Average project
+For some reason I only have two copies of the testinputfunction project and one copy of the testsort project. This one got lost.
+
+
+# Testinputfunction project
+def read_numbers(filename):
+    """Reads numbers from a text file and returns them as a list of floats."""
+    with open(filename, 'r') as file:
+        numbers = []
+        for line in file:
+            try:
+                numbers.append(float(line.strip()))
+            except ValueError:
+                print(f"Warning: '{line.strip()}' is not a valid number and will be skipped.")
+        return numbers
+def compute_average(numbers):
+    """Computes the average of a list of numbers."""
+    return sum(numbers) / len(numbers) if numbers else 0
+def main():
+    filename = input("Enter the name of the text file: ")
+    try:
+        numbers = read_numbers(filename)
+        average = compute_average(numbers)
+        print(f"The average is: {average}")
+    except FileNotFoundError:
+        print("Error: File not found.")
+if __name__ == "__main__":
+    main()
+
+
+# Testsort project
+def isSorted(lst):
+    if len(lst) < 2:
+        return True
+    for i in range(len(lst) - 1):
+        if lst[i] > lst[i + 1]:
+            return False
+    return True
+user_input = input("Enter a list of numbers separated by spaces: ")
+number_list = list(map(int, user_input.split()))
+result = isSorted(number_list)
+print(f"The list {number_list} -> isSorted: {result}")
+
+# Week nine code---------------------------------------------------------------------------------
+
+# Circle project
+import turtle
+import math
+
+def drawCircle(turtle_obj, center, radius):
+    turtle_obj.penup()
+    turtle_obj.goto(center[0], center[1] - radius)
+    turtle_obj.pendown()
+    distance = 2.0 * math.pi * radius / 120.0 
+    for _ in range(120):
+        turtle_obj.forward(distance)
+        turtle_obj.right(3)
+
+if __name__ == "__main__":
+    screen = turtle.Screen()
+    t = turtle.Turtle()
+    x = float(input("Enter the x-coordinate of the circle's center: "))
+    y = float(input("Enter the y-coordinate of the circle's center: "))
+    radius = float(input("Enter the radius of the circle: "))
+
+# Kock project
+import turtle
+
+def drawFractalLine(turtle_obj, length, level):
+    if level == 0:
+        turtle_obj.forward(length)
+    else:
+        segment_length = length / 3.0
+        drawFractalLine(turtle_obj, segment_length, level - 1)
+        turtle_obj.left(60)
+        drawFractalLine(turtle_obj, segment_length, level - 1)
+        turtle_obj.right(120)
+        drawFractalLine(turtle_obj, segment_length, level - 1)
+        turtle_obj.left(60)
+        drawFractalLine(turtle_obj, segment_length, level - 1)
+
+def drawKochSnowflake(turtle_obj, length, level):
+    for _ in range(3):
+        drawFractalLine(turtle_obj, length, level)
+        turtle_obj.right(120)
+
+if __name__ == "__main__":
+    screen = turtle.Screen()
+    t = turtle.Turtle()
+    t.speed(0)
+    level = int(input("Enter the level of the Koch snowflake (0, 1, or 2): "))
+    length = float(input("Enter the length of each side of the snowflake: "))
+    drawKochSnowflake(t, length, level)
+    screen.mainloop()
+
+# Speia project
+image = Image("")
+(red, green, blue) = image.getPixel(x,y)
+if red < 63:
+    red = int(red * 1.1)
+    blue = int(blue * 0.9)
+    elif red < 192:
+        red = int(red * 1.15)
+        blue = int(blue * 0.85)
+    else:
+        red = min(int(red * 1.08), 255)
+        blue = int(blue * 0.93)
+
+# Week ten code---------------------------------------------------------------------------------
+
+# Taxformwithgui project
+from breezypythongui import EasyFrame
+
+class TaxCalculator(EasyFrame):
+    def __init__(self):
+        EasyFrame.__init__(self, title="Simple Tax Calculator")
+        self.addLabel(text="Gross Income ($):", row=0, column=0)
+        self.incomeField = self.addIntegerField(value=50000, row=0, column=1)
+        self.addLabel(text="Number of Dependents:", row=1, column=0)
+        self.dependentsField = self.addIntegerField(value=2, row=1, column=1)
+        self.addLabel(text="Tax Owed ($):", row=2, column=0)
+        self.taxOwedLabel = self.addLabel(text="$0.00", row=2, column=1)
+        self.addButton(text="Compute", row=3, column=0, columnspan=2, command=self.compute_tax)
+    def compute_tax(self):
+        income = self.incomeField.getNumber()
+        dependents = self.dependentsField.getNumber()
+        dependent_deduction = 3000 * dependents
+        taxable_income = income - dependent_deduction
+        if taxable_income <= 0:
+            tax_owed = 0
+        elif taxable_income <= 9875:
+            tax_owed = taxable_income * 0.10
+        elif taxable_income <= 40125:
+            tax_owed = 987.5 + (taxable_income - 9875) * 0.12
+        elif taxable_income <= 85525:
+            tax_owed = 4617.5 + (taxable_income - 40125) * 0.22
+        elif taxable_income <= 163300:
+            tax_owed = 14605.5 + (taxable_income - 85525) * 0.24
+        else:
+            tax_owed = 33271.5 + (taxable_income - 163300) * 0.32
+        self.taxOwedLabel["text"] = f"${tax_owed:,.2f}"
+
+if __name__ == "__main__":
+    TaxCalculator().mainloop()
+    
+# Tempuraturewithgui project
+from breezypythongui import EasyFrame
+class TemperatureConverter(EasyFrame):
+    def __init__(self):
+        EasyFrame.__init__(self, title="Temperature Converter")
+        self.addLabel(text="Fahrenheit:", row=0, column=0)
+        self.fahrenheitField = self.addFloatField(value=32.0, row=1, column=0)
+        self.addLabel(text="Celsius:", row=0, column=1)
+        self.celsiusField = self.addFloatField(value=0.0, row=1, column=1)
+        self.addButton(text=">>>>", row=2, column=0, command=self.fahrenheit_to_celsius)
+        self.addButton(text="<<<<", row=2, column=1, command=self.celsius_to_fahrenheit)
+    def fahrenheit_to_celsius(self):
+        fahrenheit = self.fahrenheitField.getNumber()
+        celsius = (fahrenheit - 32) * 5.0 / 9.0
+        self.celsiusField.setNumber(celsius)
+    def celsius_to_fahrenheit(self):
+        celsius = self.celsiusField.getNumber()
+        fahrenheit = celsius * 9.0 / 5.0 + 32
+        self.fahrenheitField.setNumber(fahrenheit)
+
+if __name__ == "__main__":
+    TemperatureConverter().mainloop()
+
+
+
